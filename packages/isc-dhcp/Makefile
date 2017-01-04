@@ -155,19 +155,21 @@ $(call Package/isc-dhcp-omshell/description)
  This package is compiled with IPv4 and IPv6 support.
 endef
 
-CONFIGURE_ARGS += \
-	--disable-tracing 		\
-	--enable-paranoia		\
-	--disable-dependency-tracking	\
-	--with-randomdev=/dev/urandom \
-	ac_cv_file__dev_random=yes
-
 ifeq ($(BUILD_VARIANT),ipv4)
   CONFIGURE_ARGS += --disable-dhcpv6
 endif
 ifeq ($(BUILD_VARIANT),ipv6)
   CONFIGURE_ARGS += --enable-dhcpv6
 endif
+
+CONFIGURE_ARGS += \
+	--disable-tracing		\
+	--enable-paranoia		\
+	--disable-dependency-tracking	\
+	--with-randomdev=/dev/urandom
+
+CONFIGURE_VARS += \
+	ac_cv_file__dev_random=yes
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR)			\
