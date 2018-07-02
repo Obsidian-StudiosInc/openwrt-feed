@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=isc-dhcp
 UPSTREAM_NAME:=dhcp
-PKG_VERSION:=4.3.5
+PKG_VERSION:=4.4.1
 PKG_RELEASE:=1
 
 PKG_LICENSE:=BSD-3-Clause
@@ -18,7 +18,7 @@ PKG_MAINTAINER:=William L Thomson Jr <wlt@o-sinc.com>
 
 PKG_SOURCE:=$(UPSTREAM_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://www.isc.org/downloads/file/dhcp-$(PKG_VERSION)/?version=tar-gz
-PKG_MD5SUM:=2b5e5b2fa31c2e27e487039d86f83d3f
+PKG_HASH:=2a22508922ab367b4af4664a0472dc220cc9603482cf3c16d9aff14f3a76b608
 
 PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=1
