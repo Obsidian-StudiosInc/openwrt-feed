@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=radvd
-PKG_VERSION:=2.15
+PKG_VERSION:=2.17
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://v6web.litech.org/radvd/dist
-PKG_MD5SUM:=2f9b0881e6f987b6525005bb1ceaa2fc
+PKG_HASH:=53757e7f2164899e1145482f1ae91829600a6e2f6fec29cfb3b350a3bb45bd5d
 PKG_MAINTAINER:=William L Thomson Jr <wlt@o-sinc.com>
 PKG_LICENSE:=GPL-2.0
 
