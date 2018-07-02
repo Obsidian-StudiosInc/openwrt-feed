@@ -1,30 +1,37 @@
-diff --git a/bind/Makefile.in b/bind/Makefile.in
-index bd784c6..5950d19 100644
---- a/bind/Makefile.in
-+++ b/bind/Makefile.in
-@@ -85,13 +85,13 @@ bind2:
- 		echo Bind export libraries already installed ;               \
- 	else                                                                 \
- 		echo Building BIND Export libraries - this takes some time. ;\
--		(cd ${bindsrcdir}/lib/export ;                               \
--		  echo building in `pwd` ;                                   \
--		  MAKE=${GMAKE} ${GMAKE} >> ${binddir}/build.log) ;          \
-+		(cd ${bindsrcdir}/lib/export/dns ;			     \
-+		  echo building gen using ${BUILD_CC} in `pwd` ;             \
-+		  $(MAKE) CC=${BUILD_CC} CFLAGS="-O2" LIBS="" gen) ;         \
-                                                                              \
- 		echo Installing BIND Export libraries to ${binddir}. ;       \
- 		(cd ${bindsrcdir}/lib/export ;                               \
--		  MAKE=${GMAKE} ${GMAKE} install > ${binddir}/install.log) ; \
-+		  $(MAKE) DESTDIR="" install > ${binddir}/build.log) ;       \
+diff -Naur a/bind/Makefile.in b/bind/Makefile.in
+--- a/bind/Makefile.in	2018-07-02 11:12:19.897979319 -0400
++++ b/bind/Makefile.in	2018-07-02 11:39:25.843115125 -0400
+@@ -77,19 +77,13 @@
+ 		echo Bind libraries already installed ;                   \
+ 	else                                                              \
+ 		echo Building BIND libraries - this takes some time. ;    \
+-		for libdir in ${bindlibs} ; do                            \
+-		 (cd ${bindsrcdir}/lib/$$libdir ;                         \
+-		  echo Building $$libdir library in `pwd` ;               \
+-		  $(MAKE) all >> ${binddir}/build.log) ;                      \
+-		done ;                                                    \
++		 (cd ${bindsrcdir}/lib/dns ;                              \
++		  echo Building gen using ${BUILD_CC} in `pwd` ;          \
++		  $(MAKE) CC=${BUILD_CC} CFLAGS="-O2" LIBS="" gen) ;      \
+ 		                                                          \
+ 		echo Installing BIND libraries to ${binddir}. ;           \
+-		for libdir in ${bindlibs} ; do                            \
+-		 (cd ${bindsrcdir}/lib/$$libdir ;                         \
+-		  MAKEDEFS="${installdirs}"; export MAKEDEFS;             \
+-		  $(MAKE) ${installdirs} LIBTOOL_MODE_INSTALL= install >> \
+-		   ${binddir}/install.log) ;                              \
+-		done ;                                                    \
++		 (cd ${bindsrcdir}/lib/dns ;                              \
++		   $(MAKE) DESTDIR="" install > ${binddir}/install.log) ; \
  	fi
  
  clean:
-@@ -100,6 +100,7 @@ clean:
+@@ -97,7 +91,7 @@
+ 	rm -rf ${bindsrcdir} ${cleandirs} ${cleanfiles}
  
- # Include the following so that this Makefile is happy when the parent
- # tries to use them.
-+install-exec:
+ @INSTALL_BIND_FALSE@install:
+-@INSTALL_BIND_TRUE@install: install-bind
++@INSTALL_BIND_TRUE@install:
  
- distdir:
- 
+ install-bind: all
+ 	@for libdir in ${bindlibs} ; do   \
