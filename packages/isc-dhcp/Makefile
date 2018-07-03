@@ -194,10 +194,13 @@ endef
 define Package/isc-dhcp-server-$(BUILD_VARIANT)/install
 	$(INSTALL_DIR) $(1)/usr/sbin $(1)/etc
 	$(INSTALL_DIR) $(1)/usr/sbin $(1)/etc/init.d
+ifeq ($(BUILD_VARIANT),ipv4)
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/dhcpd $(1)/usr/sbin
 	$(INSTALL_BIN) ./files/dhcpd.init $(1)/etc/init.d/dhcpd
 	$(INSTALL_BIN) ./files/dhcpd.conf $(1)/etc
+endif
 ifeq ($(BUILD_VARIANT),ipv6)
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/dhcpd $(1)/usr/sbin/dhcpd6
 	$(INSTALL_BIN) ./files/dhcpd6.init $(1)/etc/init.d/dhcpd6
 	$(INSTALL_BIN) ./files/dhcpd6.conf $(1)/etc
 endif
